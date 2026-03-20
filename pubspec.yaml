@@ -1,0 +1,23 @@
+name: free_droid_warn
+description: A Flutter plugin that shows a warning dialog informing users about Google's upcoming developer verification requirement, based on the FreeDroidWarn Android library.
+version: 1.0.0
+homepage: https://github.com/NovaMeowTech/FreeDroidWarn_Flutter
+
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.novameowtech.free_droid_warn
+        pluginClass: FreeDroidWarnPlugin
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

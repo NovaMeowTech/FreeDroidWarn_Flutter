@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="free_droid_warn_dialog_warning">Google, 2026/2027 yılından itibaren sertifikalı Android cihazlardaki tüm uygulamaların, geliştiricilerin kişisel kimlik bilgilerini doğrudan Google\'a göndermesini gerektireceğini duyurdu. Bu uygulamanın geliştiricileri bu gerekliliği kabul etmediğinden, uygulama bu tarihten sonra sertifikalı Android cihazlarda çalışmayacaktır.</string>
+    <string name="free_droid_warn_dialog_more_info">Detaylar</string>
+    <string name="free_droid_warn_solution">Çözüm</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="free_droid_warn_dialog_warning">Google объявила, что начиная с 2026/2027 года все приложения на сертифицированных устройствах Android будут требовать от разработчиков предоставления своих личных данных для идентификации напрямую Google. Так как разработчики этого приложения не согласны с этим требованием, приложение перестанет работать на сертифицированных устройствах Android после этого времени.</string>
+    <string name="free_droid_warn_dialog_more_info">Подробнее</string>
+    <string name="free_droid_warn_solution">Решение</string>
+</resources>

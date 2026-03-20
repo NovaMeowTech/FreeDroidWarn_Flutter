@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="free_droid_warn_dialog_warning">Google ha annunciato che, a partire dal 2026/2027, tutte le app sui dispositivi Android certificati richiederanno agli sviluppatori di fornire i propri dati personali di identità direttamente a Google. Poiché gli sviluppatori di questa app non accettano tale requisito, l'app smetterà di funzionare sui dispositivi Android certificati dopo quella data.</string>
+    <string name="free_droid_warn_dialog_more_info">Dettagli</string>
+    <string name="free_droid_warn_solution">Soluzione</string>
+</resources>
