@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="free_droid_warn_dialog_warning">Společnost Google oznámila, že od roku 2026/2027 budou všechny aplikace na certifikovaných zařízeních Android vyžadovat, aby vývojář odeslal své osobní identifikační údaje přímo společnosti Google. Jelikož vývojáři této aplikace s tímto požadavkem nesouhlasí, aplikace po tomto datu přestane na certifikovaných zařízeních Android fungovat.</string>
+    <string name="free_droid_warn_dialog_more_info">Podrobnosti</string>
+    <string name="free_droid_warn_solution">Řešení</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="free_droid_warn_dialog_warning">Google har meddelat att från och med 2026/2027 kommer alla appar på certifierade Android-enheter att kräva att utvecklarna lämnar sina personliga identitetsuppgifter direkt till Google. Eftersom utvecklarna av denna app inte accepterar detta krav kommer appen inte längre att fungera på certifierade Android-enheter efter den tiden.</string>
+    <string name="free_droid_warn_dialog_more_info">Detaljer</string>
+    <string name="free_droid_warn_solution">Lösning</string>
+</resources>
