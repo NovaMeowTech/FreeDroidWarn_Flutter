@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'src/free_droid_warn_localizations.dart';
+
+export 'src/free_droid_warn_localizations.dart' show FreeDroidWarnStrings;
+
 /// A Flutter plugin for displaying the FreeDroidWarn alert dialog.
 ///
 /// This plugin shows a warning dialog informing users about Google's upcoming
@@ -12,12 +16,6 @@ import 'package:url_launcher/url_launcher.dart';
 /// Based on https://github.com/woheller69/FreeDroidWarn
 class FreeDroidWarn {
   static const String _prefKey = 'versionCodeWarn';
-  static const String _warningMessage =
-      "Google has announced that, starting in 2026/2027, all apps on certified "
-      "Android devices will require the developer to submit personal identity "
-      "details directly to Google. Since the developers of this app do not "
-      "agree to this requirement, this app will no longer work on certified "
-      "Android devices after that time.";
   static const String _detailsUrl = 'https://keepandroidopen.org';
   static const String _solutionUrl =
       'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions';
@@ -33,6 +31,12 @@ class FreeDroidWarn {
   /// [buildVersion] should be your app's current version code
   /// (e.g. `PackageInfo.buildNumber` parsed as an integer, or
   /// `BuildConfig.VERSION_CODE` on Android).
+  ///
+  /// The dialog text and button labels are automatically shown in the device
+  /// language when a translation is available. Supported languages: Arabic,
+  /// Czech, German, Greek, English, Spanish, French, Hindi, Hungarian,
+  /// Indonesian, Italian, Japanese, Korean, Dutch, Polish, Portuguese, Russian,
+  /// Slovak, Swedish, Turkish. Falls back to English for other languages.
   static Future<void> showWarningOnUpgrade(
       BuildContext context, int buildVersion) async {
     final prefs = await SharedPreferences.getInstance();
@@ -41,12 +45,14 @@ class FreeDroidWarn {
     if (buildVersion <= storedVersion) return;
     if (!context.mounted) return;
 
+    final strings = FreeDroidWarnLocalizations.of(context);
+
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          content: const Text(_warningMessage),
+          content: Text(strings.warning),
           actions: [
             TextButton(
               onPressed: () async {
@@ -55,7 +61,7 @@ class FreeDroidWarn {
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 }
               },
-              child: const Text('Details'),
+              child: Text(strings.details),
             ),
             TextButton(
               style: TextButton.styleFrom(foregroundColor: Colors.red),
@@ -65,7 +71,7 @@ class FreeDroidWarn {
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 }
               },
-              child: const Text('Solution'),
+              child: Text(strings.solution),
             ),
             TextButton(
               onPressed: () async {
