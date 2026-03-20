@@ -17,6 +17,8 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.2.2
+  url_launcher: ^6.2.0
 
 dev_dependencies:
   flutter_test:
