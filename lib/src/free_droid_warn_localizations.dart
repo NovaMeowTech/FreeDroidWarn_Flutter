@@ -235,12 +235,48 @@ class FreeDroidWarnLocalizations {
       details: 'Detaylar',
       solution: 'Çözüm',
     ),
+    // Chinese Simplified (Mainland China, Singapore, and script-tagged Hans)
+    'zh-Hans': FreeDroidWarnStrings(
+      warning:
+          '谷歌宣布，从2026年或2027年开始，所有在认证安卓设备上运行的应用，开发者都必须直接向谷歌提交个人身份信息。'
+          '由于本应用的开发者不同意此项要求，届时该应用将无法在认证的安卓设备上继续运行。',
+      details: '详情',
+      solution: '解决方案',
+    ),
+    // Chinese Traditional (Taiwan, Hong Kong, Macau, and script-tagged Hant)
+    'zh-Hant': FreeDroidWarnStrings(
+      warning:
+          'Google宣布，從2026年或2027年開始，所有在認證Android裝置上運行的應用程式，'
+          '開發者都必須直接向Google提交個人身份資訊。由於本應用程式的開發者不同意此項要求，'
+          '屆時該應用程式將無法在認證的安卓設備上繼續運行。',
+      details: '詳情',
+      solution: '解決方案',
+    ),
   };
 
   /// Returns translated strings for the language of [context]'s current
   /// locale, falling back to English if the language is not supported.
+  ///
+  /// For Chinese (`zh`), Traditional script is used for Taiwan (`TW`), Hong
+  /// Kong (`HK`), and Macau (`MO`) locales, and for any locale whose
+  /// [Locale.scriptCode] is `Hant`. All other Chinese locales (including
+  /// Mainland China and Singapore) use Simplified script.
   static FreeDroidWarnStrings of(BuildContext context) {
-    final languageCode = Localizations.maybeLocaleOf(context)?.languageCode;
-    return _strings[languageCode] ?? _strings['en']!;
+    final locale = Localizations.maybeLocaleOf(context);
+    if (locale == null) return _strings['en']!;
+
+    if (locale.languageCode == 'zh') {
+      // scriptCode takes priority over countryCode; only fall back to
+      // countryCode when no explicit script is provided by the system.
+      final isTraditional =
+          locale.scriptCode == 'Hant' ||
+          (locale.scriptCode == null &&
+              const {'TW', 'HK', 'MO'}.contains(locale.countryCode));
+      return isTraditional
+          ? (_strings['zh-Hant'] ?? _strings['en']!)
+          : (_strings['zh-Hans'] ?? _strings['en']!);
+    }
+
+    return _strings[locale.languageCode] ?? _strings['en']!;
   }
 }

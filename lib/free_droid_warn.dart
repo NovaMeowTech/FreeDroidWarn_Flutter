@@ -36,7 +36,8 @@ class FreeDroidWarn {
   /// language when a translation is available. Supported languages: Arabic,
   /// Czech, German, Greek, English, Spanish, French, Hindi, Hungarian,
   /// Indonesian, Italian, Japanese, Korean, Dutch, Polish, Portuguese, Russian,
-  /// Slovak, Swedish, Turkish. Falls back to English for other languages.
+  /// Slovak, Swedish, Turkish, Chinese Simplified, and Chinese Traditional.
+  /// Falls back to English for other languages.
   static Future<void> showWarningOnUpgrade(
       BuildContext context, int buildVersion) async {
     final prefs = await SharedPreferences.getInstance();
