@@ -1,6 +1,12 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-/// A Flutter plugin for displaying the FreeDroidWarn alert dialog on Android.
+import 'src/free_droid_warn_localizations.dart';
+
+export 'src/free_droid_warn_localizations.dart' show FreeDroidWarnStrings;
+
+/// A Flutter plugin for displaying the FreeDroidWarn alert dialog.
 ///
 /// This plugin shows a warning dialog informing users about Google's upcoming
 /// developer verification requirement (starting 2026/2027), which will affect
@@ -9,7 +15,10 @@ import 'package:flutter/services.dart';
 ///
 /// Based on https://github.com/woheller69/FreeDroidWarn
 class FreeDroidWarn {
-  static const MethodChannel _channel = MethodChannel('free_droid_warn');
+  static const String _prefKey = 'versionCodeWarn';
+  static const String _detailsUrl = 'https://keepandroidopen.org';
+  static const String _solutionUrl =
+      'https://github.com/woheller69/FreeDroidWarn?tab=readme-ov-file#solutions';
 
   /// Shows the FreeDroidWarn warning dialog if the app has been upgraded to a
   /// new version since the dialog was last shown.
@@ -23,10 +32,60 @@ class FreeDroidWarn {
   /// (e.g. `PackageInfo.buildNumber` parsed as an integer, or
   /// `BuildConfig.VERSION_CODE` on Android).
   ///
-  /// Throws a [PlatformException] if the native call fails.
-  static Future<void> showWarningOnUpgrade(int buildVersion) {
-    return _channel.invokeMethod('showWarningOnUpgrade', {
-      'buildVersion': buildVersion,
-    });
+  /// The dialog text and button labels are automatically shown in the device
+  /// language when a translation is available. Supported languages: Arabic,
+  /// Czech, German, Greek, English, Spanish, French, Hindi, Hungarian,
+  /// Indonesian, Italian, Japanese, Korean, Dutch, Polish, Portuguese, Russian,
+  /// Slovak, Swedish, Turkish, Chinese Simplified, and Chinese Traditional.
+  /// Falls back to English for other languages.
+  static Future<void> showWarningOnUpgrade(
+      BuildContext context, int buildVersion) async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedVersion = prefs.getInt(_prefKey) ?? 0;
+
+    if (buildVersion <= storedVersion) return;
+    if (!context.mounted) return;
+
+    final strings = FreeDroidWarnLocalizations.of(context);
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          content: Text(strings.warning),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                final uri = Uri.parse(_detailsUrl);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
+              child: Text(strings.details),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(foregroundColor: Colors.red),
+              onPressed: () async {
+                final uri = Uri.parse(_solutionUrl);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                }
+              },
+              child: Text(strings.solution),
+            ),
+            TextButton(
+              onPressed: () async {
+                await prefs.setInt(_prefKey, buildVersion);
+                if (dialogContext.mounted) {
+                  Navigator.of(dialogContext).pop();
+                }
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

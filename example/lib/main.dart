@@ -26,14 +26,14 @@ class MyHomePage extends StatelessWidget {
     // Show the warning dialog once when the app starts (version code 1).
     // In a real app you would pass your BuildConfig.VERSION_CODE here.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      FreeDroidWarn.showWarningOnUpgrade(1);
+      FreeDroidWarn.showWarningOnUpgrade(context, 1);
     });
 
     return Scaffold(
       appBar: AppBar(title: const Text('FreeDroidWarn Example')),
       body: Center(
         child: ElevatedButton(
-          onPressed: () => FreeDroidWarn.showWarningOnUpgrade(1),
+          onPressed: () => FreeDroidWarn.showWarningOnUpgrade(context, 1),
           child: const Text('Show Warning Dialog'),
         ),
       ),
